@@ -5,7 +5,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProjectController;
-use App\Http\Controllers\LoginController;
+use App\Http\Controllers\AuthController;
 
 
 
@@ -37,7 +37,7 @@ Route::delete('/tasks/delete/{id}', [TaskController::class,'destroy'])->name('ta
 Route::post('/tasks/filter', [TaskController::class,'filter'])->name('tasks.filter');
 
 //Route of User
-Route::get('/users', [UserController::class,'index'])->name('user.index');
+Route::get('/users', [UserController::class,'index'])->middleware('auth.check')->name('user.index');
 Route::get('/user/create', [UserController::class, 'create'])->name('user.create');
 Route::post('/user/store', [UserController::class, 'store'])->name('user.store');
 Route::get('/user/edit/{id}', [UserController::class,'edit'])->name('user.edit');
@@ -53,7 +53,8 @@ Route::patch('/task/update/{id}', [ProjectController::class,'update'])->name('pr
 Route::delete('/project/delete/{id}', [ProjectController::class,'destroy'])->name('project.destroy');
 
 
-
+Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
 
 
 
