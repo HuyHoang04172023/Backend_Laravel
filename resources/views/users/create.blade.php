@@ -63,12 +63,21 @@
         @csrf
         <label for="name">Name: </label>
         <input type="text" name="name" id="name" placeholder="Enter user name">
+        @error('name')
+            <div style="color: red;">{{ $message }}</div>
+        @enderror
 
         <label for="email">Email: </label>
         <input type="text" name="email" id="email" placeholder="Enter user email">
+        @error('email')
+            <div style="color: red;">{{ $message }}</div>
+        @enderror
 
         <label for="password">Password: </label>
         <input type="password" name="password" id="password" placeholder="Enter password">
+        @error('password')
+            <div style="color: red;">{{ $message }}</div>
+        @enderror
 
         <input type="submit" value="Create User">
     </form>

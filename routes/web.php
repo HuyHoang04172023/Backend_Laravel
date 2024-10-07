@@ -9,6 +9,7 @@ use App\Http\Controllers\AuthController;
 
 
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -21,14 +22,21 @@ use App\Http\Controllers\AuthController;
 */
 
 Route::get('/', function () {
-    return view('login');
+    return view('welcome');
 });
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
+
+require __DIR__.'/auth.php';
+
 
 //Route of Post
 Route::get('/posts', [PostController::class, 'index']);
 
 //Route of Task
-Route::get('/tasks', [TaskController::class, 'index'])->name('tasks.index');
+Route::get('/tasks', [TaskController::class, 'index'])->middleware('role:admin')->name('tasks.index');
 Route::get('/tasks/create', [TaskController::class, 'create'])->name('tasks.create');
 Route::post('/tasks/store', [TaskController::class, 'store'])->name('tasks.store');
 Route::get('/tasks/edit/{id}', [TaskController::class,'edit'])->name('tasks.edit');
@@ -37,7 +45,7 @@ Route::delete('/tasks/delete/{id}', [TaskController::class,'destroy'])->name('ta
 Route::post('/tasks/filter', [TaskController::class,'filter'])->name('tasks.filter');
 
 //Route of User
-Route::get('/users', [UserController::class,'index'])->middleware('auth.check')->name('user.index');
+Route::get('/users', [UserController::class,'index'])->middleware('auth')->name('user.index');
 Route::get('/user/create', [UserController::class, 'create'])->name('user.create');
 Route::post('/user/store', [UserController::class, 'store'])->name('user.store');
 Route::get('/user/edit/{id}', [UserController::class,'edit'])->name('user.edit');
@@ -53,14 +61,10 @@ Route::patch('/task/update/{id}', [ProjectController::class,'update'])->name('pr
 Route::delete('/project/delete/{id}', [ProjectController::class,'destroy'])->name('project.destroy');
 
 
-Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
-Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
+// Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+// Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
+// Route::get('/logout', [AuthController::class,'logout'])->name('logout');
 
-
-
-
-
-
-
-
-
+Route::get('/no-access', function () {
+    return view('no_access');
+});

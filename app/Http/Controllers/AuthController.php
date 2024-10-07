@@ -33,4 +33,19 @@ class AuthController extends Controller
             'email' => 'Thông tin đăng nhập không chính xác.',
         ]);
     }
+
+    public function logout(Request $request)
+{
+    Auth::logout();
+
+    // Xóa tất cả session của người dùng
+    $request->session()->invalidate();
+
+    // Tạo lại token CSRF để bảo mật
+    $request->session()->regenerateToken();
+
+    // Chuyển hướng người dùng về trang login (hoặc trang chủ)
+    return redirect('/login');
+}
+
 }

@@ -46,10 +46,16 @@ class User extends Authenticatable
      */
     public function setPasswordAttribute($value)
     {
-        // Mã hóa (hash) mật khẩu trước khi lưu vào database
         $this->attributes['password'] = Hash::make($value);
     }
     public function tasks (){
         return $this->hasMany(Task::class);
+    }
+
+    public function roles (){
+        return $this->belongsToMany(Role::class);
+    }
+    public function hasRole ($role){
+        return  $this->roles->pluck('name')->contains($role);
     }
 }

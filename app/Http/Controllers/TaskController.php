@@ -29,6 +29,7 @@ class TaskController extends Controller
         $projects = Project::all();
         return view("tasks.create", compact("users","projects"));
     }
+    
 
     /**
      * Store a newly created resource in storage.
