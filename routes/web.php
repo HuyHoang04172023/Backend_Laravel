@@ -53,7 +53,7 @@ Route::patch('/user/update/{id}', [UserController::class,'update'])->name('user.
 Route::delete('/user/delete/{id}', [UserController::class,'destroy'])->name('user.destroy');
 
 //Route of Project
-Route::get('/projects', [ProjectController::class,'index'])->name('project.index');
+Route::get('/projects', [ProjectController::class,'index'])->middleware('auth')->name('project.index');
 Route::get('/project/create', [ProjectController::class,'create'])->name('project.create');
 Route::post('/project/store', [ProjectController::class,'store'])->name('project.store');
 Route::get('/project/edit/{id}', [ProjectController::class,'edit'])->name('project.edit');

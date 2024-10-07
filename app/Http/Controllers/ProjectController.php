@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\Project;
 
@@ -12,11 +13,16 @@ class ProjectController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $projects = Project::all();
+        if($request->user()->can("viewAny",[User::class,'admin'])){
 
-        return view("projects.index", compact("projects"));
+            $projects = Project::all();
+
+            return view("projects.index", compact("projects"));
+        }
+
+        abort(403, 'Unauthorized action.');
     }
 
     /**
