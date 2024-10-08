@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Gate;
 use Illuminate\Http\Request;
 use App\Models\Project;
+use Auth;
 
 
 class ProjectController extends Controller
@@ -14,15 +16,16 @@ class ProjectController extends Controller
      * Display a listing of the resource.
      */
     public function index(Request $request)
-    {
-        if($request->user()->can("viewAny",[User::class,'admin'])){
+    {  
+        // if($request->user()->can("hasRole",[User::class, ['admin','user','editor']])){
 
             $projects = Project::all();
 
-            return view("projects.index", compact("projects"));
-        }
+            return view("projects.index", compact("projects", 'request' ));
+  //      }
 
-        abort(403, 'Unauthorized action.');
+        // // abort(403, 'Unauthorized action.');
+        // return view('no_access');
     }
 
     /**

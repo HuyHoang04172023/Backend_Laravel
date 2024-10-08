@@ -18,7 +18,10 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name',
+        'email',
+        'password',
+        'role_id',
     ];
 
     /**
@@ -27,7 +30,8 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password',
+        'remember_token',
     ];
 
     /**
@@ -48,14 +52,12 @@ class User extends Authenticatable
     {
         $this->attributes['password'] = Hash::make($value);
     }
-    public function tasks (){
+    public function tasks()
+    {
         return $this->hasMany(Task::class);
     }
 
-    public function roles (){
-        return $this->belongsToMany(Role::class);
-    }
-    public function hasRole ($role){
-        return  $this->roles->pluck('name')->contains($role);
+    public function role(){
+        return $this->belongsTo(Role::class);
     }
 }

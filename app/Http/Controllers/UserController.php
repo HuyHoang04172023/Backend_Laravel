@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Role;
+
 
 class UserController extends Controller
 {
@@ -22,7 +24,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view("users.create");
+        $roles = Role::all();
+        return view("users.create",compact("roles"));
     }
 
     /**
@@ -43,7 +46,6 @@ class UserController extends Controller
                 "required",
                 "email",
                 // Kiểm tra email duy nhất trong bảng users, bỏ qua email của user hiện tại
-                "unique:users,email," . $request->user()->id,
             ],
             "password" => [
                 "required",
@@ -76,6 +78,7 @@ class UserController extends Controller
             "name" => $validatedData['name'],
             "email" => $validatedData['email'],
             "password" => bcrypt($validatedData['password']),
+            "role_id" => $request->roleId ?? 1,
         ]);
 
         return redirect()->route("user.index")->with("success", "User created successfully!");

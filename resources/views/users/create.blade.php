@@ -79,6 +79,13 @@
             <div style="color: red;">{{ $message }}</div>
         @enderror
 
+        <label for="roleId">Assign to Role: </label>
+        <select name="roleId" id="roleId">
+            @foreach ($roles as $role)
+            <option value="{{ $role->id }}">{{ $role->id }} - {{ $role->name }}</option>
+            @endforeach
+        </select>
+
         <input type="submit" value="Create User">
     </form>
 
